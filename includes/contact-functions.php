@@ -57,7 +57,7 @@ function create_contact_page() {
 add_filter('contact_form', 'my_custom_form');
 
 function my_custom_form() {
-    include(plugin_dir_path(__FILE__) . 'views/contact-form.view.php');
+    include(plugin_dir_path(__FILE__) . '../views/contact-form.view.php');
 }
 
 function cf_shortcode() {
