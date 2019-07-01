@@ -7,8 +7,8 @@ Author: ESGI Team
 Version : 0.1
 */
 
-require_once plugin_dir_path(__FILE__). 'includes/contact-functions.php';
 require_once plugin_dir_path(__FILE__). 'includes/db-functions.php';
+require_once plugin_dir_path(__FILE__). 'includes/contact-functions.php';
 
 // Hooks
 register_activation_hook(__FILE__, 'create_plugin_database_table');

@@ -23,6 +23,15 @@ function create_plugin_database_table()
     $table_name = $wpdb->prefix . 'contact';
 }
 
+function get_all_contacts () {
+    global $wpdb;
+
+    $table_name = $wpdb->prefix.'contact';
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql = "SELECT * FROM $table_name;";
+    return $wpdb->get_results($sql);
+}
+
 function contact_install_data() {
 	global $wpdb;
 	
