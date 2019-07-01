@@ -22,7 +22,7 @@ function my_thank_you_text ( $content ) {
 add_action('admin_menu','contact_plugin_setup_menu');
 
 function contact_plugin_setup_menu () {
-      add_menu_page('WP contact page', 'Contacts', 'manage_options', 'plugin_wp_contact/includes/contact-acp-page.php');
+    add_menu_page('WP contact page', 'Contacts', 'manage_options', 'plugin_wp_contact/includes/contact-acp-page.php');
 }
 
 // Register style sheet
@@ -32,4 +32,17 @@ add_action('wp_enqueue_scripts', 'btn_plugin_styles');
 function btn_plugin_styles() {
     wp_register_style('plugin_wp_contact', plugins_url('plugin_wp_contact/assets/styles/plugin.css'));
     wp_enqueue_style('plugin_wp_contact');
+}
+
+function create_contact_page() {
+    $my_post = array(
+        'post_title'    => wp_strip_all_tags('Contact'),
+        'post_content'  => 'Contact Page',
+        'post_status'   => 'publish',
+        'post_author'   => 1,
+        'post_type'     => 'page'
+    );
+
+    // Insert la page dans la bdd
+    wp_insert_post($my_post);
 }
