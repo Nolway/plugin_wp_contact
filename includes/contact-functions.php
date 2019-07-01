@@ -39,13 +39,32 @@ function contact_plugin_styles() {
 
 // Créer la page contact à l'activation du plugin
 function create_contact_page() {
-    $my_post = array(
-        'post_title'    => wp_strip_all_tags('Contact'),
-        'post_content'  => 'Contact Page',
+    $contact_page_title = 'Contact';
+    $contact_page_content = 'Contact Page';
+    $page_check = get_page_by_title($contact_page_title);
+    
+    $contact_page = array(
+        'post_title'    => wp_strip_all_tags($contact_page_title),
+        'post_content'  => $contact_page_content,
         'post_status'   => 'publish',
         'post_author'   => 1,
         'post_type'     => 'page'
     );
 
-    wp_insert_post($my_post);
+    wp_insert_post($contact_page);
 }
+
+add_filter('contact_form', 'my_custom_form');
+
+function my_custom_form() {
+    include(plugin_dir_path(__FILE__) . 'views/contact-form.view.php');
+}
+
+function cf_shortcode() {
+	ob_start();
+	my_custom_form();
+
+	return ob_get_clean();
+}
+
+add_shortcode('sitepoint_contact_form', 'cf_shortcode');

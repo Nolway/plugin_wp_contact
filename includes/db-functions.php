@@ -48,4 +48,3 @@ function contact_install_data() {
 		) 
 	);
 }
-
