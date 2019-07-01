@@ -1,5 +1,12 @@
 <?php
 
+add_action('admin_print_styles', 'myplugin_styles_scripts');
+
+function myplugin_styles_scripts() {
+    $plugin_url = plugin_dir_url( __FILE__ );
+	wp_enqueue_style('style', $plugin_url . '/assets/styles/plugin.css');
+}
+
 function contact_btn() {
     $btn = '<a href="#" class="contact-btn">
     <img class="contact-btn-img" src="'.plugins_url("plugin_wp_contact/assets/img/logo-contact.png").'" alt="Contact"></a>';
@@ -12,14 +19,10 @@ function my_thank_you_text ( $content ) {
     return $content .= '<p>Thank you for reading!</p>';
 }
 
-add_action('admin_menu','test_plugin_setup_menu');
+add_action('admin_menu','contact_plugin_setup_menu');
 
-function test_plugin_setup_menu () {
-      add_menu_page('WP contact page', 'Contacts', 'manage_options', 'contact-plugin', 'contact_plugin_page_content' );
-}
-
-function contact_plugin_page_content () {
-      echo"<h1>Page du plugin de contact</h1>";
+function contact_plugin_setup_menu () {
+      add_menu_page('WP contact page', 'Contacts', 'manage_options', 'plugin_wp_contact/includes/contact-acp-page.php');
 }
 
 // Register style sheet
