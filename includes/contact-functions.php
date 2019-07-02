@@ -39,7 +39,7 @@ function contact_plugin_styles() {
 
 // Créer la page contact à l'activation du plugin
 function create_contact_page() {
-    $contact_page_title = 'Contact';
+    $contact_page_title = 'Contactez-nous';
     $contact_page_content = 'Contact Page';
     $page_check = get_page_by_title($contact_page_title);
     
@@ -55,16 +55,3 @@ function create_contact_page() {
 }
 
 add_filter('contact_form', 'my_custom_form');
-
-function my_custom_form() {
-    include(plugin_dir_path(__FILE__) . '../views/contact-form.view.php');
-}
-
-function cf_shortcode() {
-	ob_start();
-	my_custom_form();
-
-	return ob_get_clean();
-}
-
-add_shortcode('sitepoint_contact_form', 'cf_shortcode');
