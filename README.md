@@ -12,3 +12,6 @@ plugin-wp-contact est un Plugin Wordpress permettant d'ajouter un formulaire de 
 ### Membres
 
 * Les utilisateurs peuvent envoyer une demande de contact via le formulaire
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
