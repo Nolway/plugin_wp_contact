@@ -10,7 +10,7 @@ function html_bottom_fixed_form($email, $subject, $content) {
     global $reg_errors;
     $reg_errors = new WP_Error;
     echo '
-        <div id="fixed-contact-form" class="card contact-form-wrapper">
+        <div id="fixed-contact-form" class="card contact-form-wrapper" style="display:none;">
             <div class="card-body">
                 <form action="'.$_SERVER['REQUEST_URI'].'" method="post">
                     <div class="form-group">
