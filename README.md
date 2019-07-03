@@ -4,6 +4,9 @@ plugin-wp-contact est un Plugin Wordpress permettant d'ajouter un formulaire de 
 
 ## Fonctionnalités
 
+### Plugin
+* Création de la base de donnée automatiquement à l'activation du plugin
+
 ### Admin
 
 * Les admins peuvent visualiser la liste des demandes de contact
