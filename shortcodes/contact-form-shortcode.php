@@ -5,66 +5,88 @@ function html_contact_form($email, $subject, $content) {
         <form action="'.$_SERVER['REQUEST_URI'].'" method="post">
             <div class="form-group">
                 <label for="email">Adresse e-mail</label>
-                <input type="email" name="email" class="form-control" id="email" required value="'.(isset($_POST['email']) ? $email : null).'" placeholder="Entrez votre adresse email">
+                <input type="email" name="email" class="form-control" id="email" placeholder="Entrez votre adresse email">
             </div>
             <div class="form-group">
                 <label for="subject">Sujet : </label>
-                <input type="text" name="subject" class="form-control" id="subject" required value="'.(isset($_POST['subject']) ? $subject : null).'" placeholder="Sujet du message">
+                <input type="text" name="subject" class="form-control" id="subject" placeholder="Sujet du message">
             </div>
             <div class="form-group">
                 <label for="content">Votre message :</label>
-                <textarea class="form-control" name="content" id="content" rows="3" required value="'.(isset($_POST['content']) ? $content : null).'"></textarea>
+                <textarea class="form-control" name="content" id="content" rows="3"></textarea>
             </div>
             <input type="submit" name="submit" class="btn btn-primary" value="Envoyer" />
         </form>
     ';
 }
 
-// function form_validation($email, $subject, $content) {
-//     global $reg_errors;
-//     $reg_errors = new WP_Error;
+function form_validation($email, $subject, $content) {
+    global $reg_errors;
+    $reg_errors = new WP_Error;
 
-//     if (empty($email) || empty($subject) || empty($content)) {
-//         $reg_errors->add('field', 'Les champs ne sont pas remplies');
-//     }
+    if (empty($email)) {    
+        $reg_errors->add('field', '
+            <div class="alert alert-danger">
+                <span>Le champ email n\'est pas rempli</span>
+            </div>
+        ');
+    }
 
-//     if (email_exists($email)) {
-//         $reg_errors->add( 'email', 'adresse email déjà utilisée');
-//     }
+    if (empty($subject)) {
+        $reg_errors->add('field', '
+            <div class="alert alert-danger">
+                <span>Le champ sujet n\'est pas rempli</span>
+            </div>
+        ');
+    }
 
-//     if (is_wp_error($reg_errors)) {
-//         foreach ($reg_errors->get_error_messages() as $error) {
-//             echo '<div>';
-//             echo '<strong>ERREUR : </strong>:';
-//             echo $error . '<br/>';
-//             echo '</div>';
-//         }
-//     }
-// }
+    if (empty($content)) {
+        $reg_errors->add('field', '
+            <div class="alert alert-danger">
+                <span>Le champ message n\'est pas rempli</span>
+            </div>
+            '
+        );
+    }
+
+    if (is_wp_error($reg_errors)) {
+        foreach ($reg_errors->get_error_messages() as $error) {
+            echo $error;
+        }
+    }
+}
 
 function insert_complete_form() {
-    global $email, $subject, $content, $wpdb;
+    global $reg_errors, $email, $subject, $content, $wpdb;
     $table = 'wp_contact';
     
-    $wpdb->insert($table, array(
-        'email' => $email,
-        'subject' => $subject,
-        'content' => $content
-    ),
-    array(
-        '%s',
-        '%s',
-        '%s'
-    ));
+    if ( 1 > count( $reg_errors->get_error_messages() ) ) {
+        $wpdb->insert($table, array(
+            'email' => $email,
+            'subject' => $subject,
+            'content' => $content
+        ),
+        array(
+            '%s',
+            '%s',
+            '%s'
+        ));
+
+        echo '
+            <div class="alert alert-success">
+                <span>Votre message a bien été envoyé !</span>
+            </div>   
+        ';
+    }
 }
 
 function custom_contact_form_function() {
     if (isset($_POST['submit'])) {
-        // form_validation(
-        //     $_POST['email'],
-        //     $_POST['subject'],
-        //     $_POST['content']
-        // );
+        form_validation(
+            $_POST['email'],
+            $_POST['subject'],
+            $_POST['content']
+        );
          
         // sanitize user form input
         global $email, $subject, $content;
@@ -88,7 +110,7 @@ function custom_contact_form_function() {
     );
 }
 
-add_shortcode('sitepoint_contact_form', 'contact_form_shortcode');
+add_shortcode('contact_form', 'contact_form_shortcode');
 
 function contact_form_shortcode() {
 	ob_start();

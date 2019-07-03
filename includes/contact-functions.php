@@ -7,25 +7,17 @@ function myplugin_styles_scripts() {
 	wp_enqueue_style('style', $plugin_url . '/assets/styles/plugin.css');
 }
 
-// Add contact button
-add_action('wp_footer', 'contact_btn');
-
-function contact_btn() {
-    $btn = '<a href="#" class="contact-btn">
-    <img class="contact-btn-img" src="'.plugins_url("plugin_wp_contact/assets/img/logo-contact.png").'" alt="Contact"></a>';
-    echo $btn;
-}
-
 add_action('admin_menu','contact_plugin_setup_menu');
 
-function contact_plugin_setup_menu () {
+function contact_plugin_setup_menu() {
     add_menu_page('WP contact page', 'Contacts', 'manage_options', 'plugin_wp_contact/includes/contact-acp-page.php');
+    add_submenu_page('plugin_wp_contact/includes/contact-acp-page.php', 'Custom', 'Custom', 'manage_options', 'plugin_wp_contact/includes/contact-acp-form-page.php');
 }
 
 // Register style sheet
-add_action('wp_enqueue_scripts', 'contact_plugin_styles');
+add_action('wp_enqueue_scripts', 'contact_plugin_assets');
 
-function contact_plugin_styles() {
+function contact_plugin_assets() {
     // CSS
     wp_register_style('plugin_wp_contact', plugins_url('plugin_wp_contact/assets/styles/plugin.css'));
     wp_register_style('bootstrap_style', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css');
@@ -34,7 +26,9 @@ function contact_plugin_styles() {
 
     // JS
 	wp_register_script('bootstrap_js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js');
+	wp_register_script('toggle_js', plugins_url('plugin_wp_contact/assets/js/toggle.js'));
     wp_enqueue_script('bootstrap_js');
+    wp_enqueue_script('toggle_js');
 }
 
 // Créer la page contact à l'activation du plugin
@@ -55,3 +49,6 @@ function create_contact_page() {
 }
 
 add_filter('contact_form', 'my_custom_form');
+
+
+add_action('wp_footer', 'bottom_fixed_form');

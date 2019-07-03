@@ -14,6 +14,7 @@ function create_plugin_database_table()
         subject TINYTEXT NOT NULL,
         content TEXT NOT NULL,
         email VARCHAR(150) NOT NULL,
+        creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
     ) $charset_collate;";
       
