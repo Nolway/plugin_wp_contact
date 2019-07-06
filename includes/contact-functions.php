@@ -49,6 +49,4 @@ function create_contact_page() {
 }
 
 add_filter('contact_form', 'my_custom_form');
-
-
 add_action('wp_footer', 'bottom_fixed_form');

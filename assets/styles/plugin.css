@@ -108,3 +108,7 @@
     left: 24px;
     right: auto;
 }
+
+p {
+    margin: 0 !important;
+}
