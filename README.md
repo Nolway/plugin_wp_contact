@@ -20,7 +20,7 @@ Contact : ce widget permet d'entrer des informations de contact tels que le num�
 * Les admins peuvent ajouter un bouton fixe en bas à droite de la fenêtre qui permet d'afficher un formulaire de contact sur la page de leur choix avec un shortcode
 
 ### Membres
-* Les utilisateurs peuvent envoyer une demande de contact via le formulaire
+* Les utilisateurs peuvent envoyer une demande de contact via le formulaire.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
